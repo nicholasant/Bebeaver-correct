@@ -1,5 +1,4 @@
 import React from 'react';
-import { Mountain } from 'lucide-react';
 
 const Footer = ({ expeditionInfo, contactInfo }) => {
   return (
@@ -8,13 +7,16 @@ const Footer = ({ expeditionInfo, contactInfo }) => {
         <div className="grid md:grid-cols-3 gap-8 mb-8">
           {/* Brand */}
           <div>
-            <div className="flex items-center gap-2 mb-4">
-              <Mountain className="w-8 h-8 text-amber-500" />
-              <div>
-                <h3 className="text-xl font-bold text-white">{expeditionInfo.title}</h3>
-                <p className="text-sm text-gray-500">{expeditionInfo.subtitle}</p>
-              </div>
+            <div className="flex items-center gap-3 mb-4">
+              <img 
+                src={expeditionInfo.logo} 
+                alt="Bebeaver" 
+                className="h-16 w-auto"
+              />
             </div>
+            <p className="text-lg font-bold text-white mb-2">
+              {expeditionInfo.title} - {expeditionInfo.subtitle}
+            </p>
             <p className="text-sm text-gray-500">
               {expeditionInfo.route}
             </p>
