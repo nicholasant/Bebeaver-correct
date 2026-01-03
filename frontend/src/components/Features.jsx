@@ -29,12 +29,8 @@ const Features = ({ features }) => {
               >
                 <CardContent className="p-8">
                   <div className="mb-6">
-                    <div className="w-16 h-16 rounded-full bg-gradient-to-br from-amber-700 to-amber-900 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                    <div className="w-16 h-16 rounded-full bg-gradient-to-br from-amber-700 to-amber-900 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                       <Icon className="w-8 h-8 text-white" />
-                    </div>
-                    <div className="mb-4">
-                      <div className="text-4xl font-bold text-amber-500 mb-1">{feature.stat}</div>
-                      <div className="text-sm text-gray-400">{feature.statLabel}</div>
                     </div>
                   </div>
                   <h3 className="text-xl font-bold text-white mb-3">{feature.title}</h3>
