@@ -23,7 +23,8 @@ const Hero = ({ expeditionInfo }) => {
             <img 
               src={expeditionInfo.logo} 
               alt="Bebeaver" 
-              className="h-32 w-auto"
+              className="h-32 w-auto mix-blend-lighten"
+              style={{ filter: 'drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3))' }}
             />
           </div>
 
