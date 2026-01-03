@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
-import { Mail, Phone, Globe, Send, CheckCircle } from 'lucide-react';
+import { Mail, Phone, Globe, Send } from 'lucide-react';
 import { Card } from './ui/card';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 import { Button } from './ui/button';
-import { useToast } from '../hooks/use-toast';
+import { toast } from 'sonner';
+import axios from 'axios';
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const API = `${BACKEND_URL}/api`;
 
 const Contact = ({ contactInfo }) => {
-  const { toast } = useToast();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -25,15 +28,23 @@ const Contact = ({ contactInfo }) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Mock submission
-    setTimeout(() => {
-      toast({
-        title: "Message Sent!",
-        description: "Thank you for your interest. We'll get back to you soon.",
+    try {
+      const response = await axios.post(`${API}/contact`, formData);
+      
+      if (response.data.success) {
+        toast.success("Message Sent!", {
+          description: response.data.message,
+        });
+        setFormData({ name: '', email: '', company: '', message: '', inquiry: 'sponsorship' });
+      }
+    } catch (error) {
+      toast.error("Error", {
+        description: "Failed to send message. Please try again.",
       });
-      setFormData({ name: '', email: '', company: '', message: '', inquiry: 'sponsorship' });
+      console.error('Contact form error:', error);
+    } finally {
       setIsSubmitting(false);
-    }, 1000);
+    }
   };
 
   return (
