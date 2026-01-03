@@ -20,13 +20,12 @@ const Hero = ({ expeditionInfo }) => {
         <div className="space-y-8 animate-fade-in">
           {/* Bebeaver Logo */}
           <div className="flex justify-center mb-8">
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-amber-600/30">
-              <img 
-                src={expeditionInfo.logo} 
-                alt="Bebeaver" 
-                className="h-24 w-auto"
-              />
-            </div>
+            <img 
+              src={expeditionInfo.logo} 
+              alt="Bebeaver" 
+              className="h-32 w-auto"
+              style={{ filter: 'drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5))' }}
+            />
           </div>
 
           {/* Main Title */}
