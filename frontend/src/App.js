@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import { Toaster } from './components/ui/sonner';
+import { Toaster } from 'sonner';
 import Hero from './components/Hero';
-import RouteMap from './components/RouteMap';
+import RouteMapLeaflet from './components/RouteMapLeaflet';
 import Features from './components/Features';
 import Approach from './components/Approach';
 import Documentation from './components/Documentation';
@@ -11,13 +11,10 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import {
   expeditionInfo,
-  routePoints,
   expeditionFeatures,
   expeditionApproach,
   documentation,
-  sponsors,
-  contactInfo,
-  currentLocation
+  contactInfo
 } from './mock';
 
 function App() {
@@ -34,14 +31,14 @@ function App() {
   return (
     <div className="App min-h-screen bg-stone-950">
       <Hero expeditionInfo={expeditionInfo} />
-      <RouteMap routePoints={routePoints} currentLocation={currentLocation} />
+      <RouteMapLeaflet />
       <Features features={expeditionFeatures} />
       <Approach approaches={expeditionApproach} />
       <Documentation items={documentation} />
-      <Sponsors sponsors={sponsors} />
+      <Sponsors />
       <Contact contactInfo={contactInfo} />
       <Footer expeditionInfo={expeditionInfo} contactInfo={contactInfo} />
-      <Toaster />
+      <Toaster richColors position="top-right" />
     </div>
   );
 }
