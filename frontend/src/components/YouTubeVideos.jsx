@@ -1,12 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Youtube, ExternalLink } from 'lucide-react';
 import { Card } from './ui/card';
 import { Button } from './ui/button';
 
 const YouTubeVideos = ({ channelUrl }) => {
-  // Extract channel handle from URL
-  const channelHandle = channelUrl.split('@')[1] || 'Bebeaver-q9z';
-  
   return (
     <section className="py-24 bg-gradient-to-b from-stone-950 to-stone-900">
       <div className="max-w-7xl mx-auto px-6">
@@ -20,51 +17,71 @@ const YouTubeVideos = ({ channelUrl }) => {
           </p>
         </div>
 
-        {/* YouTube Channel Embed */}
-        <Card className="bg-stone-800 border-stone-700 overflow-hidden mb-8">
-          <div className="p-8">
-            <div className="aspect-video w-full rounded-lg overflow-hidden bg-black">
-              <iframe
-                src={`https://www.youtube.com/embed?listType=user_uploads&list=${channelHandle}`}
-                title="YouTube video player"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-                className="w-full h-full"
-              ></iframe>
+        {/* YouTube Channel Card */}
+        <Card className="max-w-4xl mx-auto bg-gradient-to-r from-stone-800 to-stone-900 border-amber-700/50 overflow-hidden">
+          <div className="p-12 text-center">
+            <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-red-600 mb-6">
+              <Youtube className="w-12 h-12 text-white" />
             </div>
+            <h3 className="text-3xl font-bold text-white mb-4">
+              Watch Our Expedition Videos
+            </h3>
+            <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
+              Subscribe to our YouTube channel for real-time expedition updates, behind-the-scenes footage, and authentic overland adventure content. New videos uploaded regularly throughout our journey from Italy to Mongolia.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Button
+                size="lg"
+                className="bg-red-600 hover:bg-red-700 text-white px-10 py-6 text-lg transition-all duration-300 hover:scale-105"
+                onClick={() => window.open(channelUrl, '_blank')}
+              >
+                <Youtube className="w-6 h-6 mr-2" />
+                Visit YouTube Channel
+                <ExternalLink className="w-5 h-5 ml-2" />
+              </Button>
+              
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-2 border-amber-600 text-amber-400 hover:bg-amber-600 hover:text-white px-10 py-6 text-lg transition-all duration-300"
+                onClick={() => window.open(`${channelUrl}?sub_confirmation=1`, '_blank')}
+              >
+                Subscribe Now
+              </Button>
+            </div>
+
+            <p className="text-sm text-gray-500 mt-6">
+              @Bebeaver-q9z • Expedition starts May 2026
+            </p>
           </div>
         </Card>
 
-        {/* Latest Videos Grid - Using YouTube Channel Embed */}
-        <div className="grid md:grid-cols-3 gap-6 mb-8">
-          {[1, 2, 3].map((index) => (
-            <Card key={index} className="bg-stone-800 border-stone-700 overflow-hidden hover:border-amber-600 transition-all duration-300">
-              <div className="aspect-video bg-black">
-                <iframe
-                  src={`https://www.youtube.com/embed?listType=user_uploads&list=${channelHandle}&index=${index}`}
-                  title={`YouTube video ${index}`}
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
-                  className="w-full h-full"
-                ></iframe>
-              </div>
-            </Card>
-          ))}
-        </div>
+        {/* Features Grid */}
+        <div className="grid md:grid-cols-3 gap-6 mt-12">
+          <Card className="bg-stone-800 border-stone-700 p-6 text-center hover:border-amber-600 transition-all duration-300">
+            <div className="w-12 h-12 rounded-full bg-amber-700/30 flex items-center justify-center mx-auto mb-4">
+              <span className="text-2xl">🎥</span>
+            </div>
+            <h4 className="text-white font-bold mb-2">Daily Updates</h4>
+            <p className="text-gray-400 text-sm">Fresh content from the expedition trail</p>
+          </Card>
 
-        {/* Visit Channel Button */}
-        <div className="text-center">
-          <Button
-            size="lg"
-            className="bg-red-600 hover:bg-red-700 text-white px-10 py-6 text-lg transition-all duration-300 hover:scale-105"
-            onClick={() => window.open(channelUrl, '_blank')}
-          >
-            <Youtube className="w-6 h-6 mr-2" />
-            Visit Our YouTube Channel
-            <ExternalLink className="w-5 h-5 ml-2" />
-          </Button>
+          <Card className="bg-stone-800 border-stone-700 p-6 text-center hover:border-amber-600 transition-all duration-300">
+            <div className="w-12 h-12 rounded-full bg-amber-700/30 flex items-center justify-center mx-auto mb-4">
+              <span className="text-2xl">🎬</span>
+            </div>
+            <h4 className="text-white font-bold mb-2">Behind the Scenes</h4>
+            <p className="text-gray-400 text-sm">Unfiltered expedition experiences</p>
+          </Card>
+
+          <Card className="bg-stone-800 border-stone-700 p-6 text-center hover:border-amber-600 transition-all duration-300">
+            <div className="w-12 h-12 rounded-full bg-amber-700/30 flex items-center justify-center mx-auto mb-4">
+              <span className="text-2xl">🗺️</span>
+            </div>
+            <h4 className="text-white font-bold mb-2">Route Highlights</h4>
+            <p className="text-gray-400 text-sm">Key moments from each destination</p>
+          </Card>
         </div>
       </div>
     </section>
