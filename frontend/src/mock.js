@@ -107,23 +107,18 @@ export const expeditionApproach = [
 export const documentation = [
   {
     id: 1,
-    title: "Website",
-    description: "Showcasing expedition updates",
-    type: "website"
-  },
-  {
-    id: 2,
-    title: "Journal",
-    description: "For detailed project insights",
-    type: "journal"
-  },
-  {
-    id: 3,
     title: "Video Series",
     description: "Documenting real-life experiences",
     type: "video"
   }
 ];
+
+export const socialMedia = {
+  youtube: "https://www.youtube.com/@Bebeaver-q9z",
+  facebook: "#", // To be updated
+  instagram: "#", // To be updated
+  tiktok: "#" // To be updated
+};
 
 export const sponsors = [
   {
