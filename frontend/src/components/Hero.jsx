@@ -18,10 +18,13 @@ const Hero = ({ expeditionInfo }) => {
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 py-32 text-center">
         <div className="space-y-8 animate-fade-in">
-          {/* Team Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-amber-700/30 backdrop-blur-sm border border-amber-600/50 rounded-full">
-            <Users className="w-4 h-4 text-amber-400" />
-            <span className="text-sm text-amber-200">{expeditionInfo.team}</span>
+          {/* Bebeaver Logo */}
+          <div className="flex justify-center mb-8">
+            <img 
+              src={expeditionInfo.logo} 
+              alt="Bebeaver" 
+              className="h-32 w-auto"
+            />
           </div>
 
           {/* Main Title */}
