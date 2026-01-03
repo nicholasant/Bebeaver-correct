@@ -67,23 +67,17 @@ export const expeditionFeatures = [
   {
     id: 1,
     title: "Authenticity in Action",
-    description: "Testing products in real conditions ensures they withstand the harshest environments, providing confidence in their performance during the expedition and beyond.",
-    stat: "24/7",
-    statLabel: "Communication Uptime"
+    description: "Testing products in real conditions ensures they withstand the harshest environments, providing confidence in their performance during the expedition and beyond."
   },
   {
     id: 2,
     title: "Durability Assessment",
-    description: "Evaluating gear and equipment in diverse terrains allows for optimal functionality, confirming they meet operational needs while adapting to unexpected challenges.",
-    stat: "10",
-    statLabel: "Inches Suspension Travel"
+    description: "Evaluating gear and equipment in diverse terrains allows for optimal functionality, confirming they meet operational needs while adapting to unexpected challenges."
   },
   {
     id: 3,
     title: "Functionality Verification",
-    description: "Continuous real-world testing across multiple climates and terrains to ensure every piece of equipment performs flawlessly throughout the entire journey.",
-    stat: "3000kg",
-    statLabel: "Maximum Towing Capacity"
+    description: "Continuous real-world testing across multiple climates and terrains to ensure every piece of equipment performs flawlessly throughout the entire journey."
   }
 ];
 
