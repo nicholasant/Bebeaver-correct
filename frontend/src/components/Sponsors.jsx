@@ -1,8 +1,30 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card } from './ui/card';
 import { Button } from './ui/button';
+import axios from 'axios';
 
-const Sponsors = ({ sponsors }) => {
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const API = `${BACKEND_URL}/api`;
+
+const Sponsors = () => {
+  const [sponsors, setSponsors] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchSponsors = async () => {
+      try {
+        const response = await axios.get(`${API}/sponsors`);
+        setSponsors(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching sponsors:', error);
+        setLoading(false);
+      }
+    };
+
+    fetchSponsors();
+  }, []);
+
   return (
     <section id="sponsor-section" className="py-24 bg-stone-900">
       <div className="max-w-7xl mx-auto px-6">
@@ -14,20 +36,26 @@ const Sponsors = ({ sponsors }) => {
         </div>
 
         {/* Sponsor Logos */}
-        <div className="grid md:grid-cols-3 gap-8 mb-16">
-          {sponsors.map((sponsor) => (
-            <Card
-              key={sponsor.id}
-              className="p-8 bg-stone-800 border-stone-700 hover:border-amber-600 transition-all duration-300 hover:scale-105 flex items-center justify-center"
-            >
-              <img
-                src={sponsor.logo}
-                alt={sponsor.name}
-                className="max-w-full h-auto opacity-80 hover:opacity-100 transition-opacity duration-300"
-              />
-            </Card>
-          ))}
-        </div>
+        {loading ? (
+          <div className="text-center">
+            <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-amber-600"></div>
+          </div>
+        ) : (
+          <div className="grid md:grid-cols-3 gap-8 mb-16">
+            {sponsors.map((sponsor) => (
+              <Card
+                key={sponsor.id}
+                className="p-8 bg-stone-800 border-stone-700 hover:border-amber-600 transition-all duration-300 hover:scale-105 flex items-center justify-center"
+              >
+                <img
+                  src={sponsor.logo}
+                  alt={sponsor.name}
+                  className="max-w-full h-auto opacity-80 hover:opacity-100 transition-opacity duration-300"
+                />
+              </Card>
+            ))}
+          </div>
+        )}
 
         {/* Become a Sponsor CTA */}
         <Card className="p-12 bg-gradient-to-r from-amber-900/30 to-stone-800 border-amber-700/50">
