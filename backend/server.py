@@ -1,14 +1,17 @@
-from fastapi import FastAPI, APIRouter
+from fastapi import FastAPI, APIRouter, HTTPException
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 import os
 import logging
 from pathlib import Path
-from pydantic import BaseModel, Field, ConfigDict
 from typing import List
-import uuid
-from datetime import datetime, timezone
+from datetime import datetime
+from models import (
+    CurrentLocation, RoutePoint, ContactSubmission, 
+    ContactSubmissionCreate, Sponsor, LocationUpdate
+)
+import seed_data
 
 
 ROOT_DIR = Path(__file__).parent
@@ -25,46 +28,72 @@ app = FastAPI()
 # Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
 
-
-# Define Models
-class StatusCheck(BaseModel):
-    model_config = ConfigDict(extra="ignore")  # Ignore MongoDB's _id field
-    
-    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    client_name: str
-    timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
-
-class StatusCheckCreate(BaseModel):
-    client_name: str
-
 # Add your routes to the router instead of directly to app
 @api_router.get("/")
 async def root():
-    return {"message": "Hello World"}
+    return {"message": "West to East Expedition API"}
 
-@api_router.post("/status", response_model=StatusCheck)
-async def create_status_check(input: StatusCheckCreate):
-    status_dict = input.model_dump()
-    status_obj = StatusCheck(**status_dict)
-    
-    # Convert to dict and serialize datetime to ISO string for MongoDB
-    doc = status_obj.model_dump()
-    doc['timestamp'] = doc['timestamp'].isoformat()
-    
-    _ = await db.status_checks.insert_one(doc)
-    return status_obj
+# ========== Location Endpoints ==========
+@api_router.get("/location/current")
+async def get_current_location():
+    """Get current expedition location"""
+    location = await db.current_location.find_one()
+    if not location:
+        # Return default if not found
+        return seed_data.current_location
+    location.pop('_id', None)
+    return location
 
-@api_router.get("/status", response_model=List[StatusCheck])
-async def get_status_checks():
-    # Exclude MongoDB's _id field from the query results
-    status_checks = await db.status_checks.find({}, {"_id": 0}).to_list(1000)
+@api_router.put("/location/current")
+async def update_current_location(location: LocationUpdate):
+    """Update current expedition location"""
+    location_dict = location.dict()
+    location_dict['lastUpdate'] = datetime.utcnow()
     
-    # Convert ISO string timestamps back to datetime objects
-    for check in status_checks:
-        if isinstance(check['timestamp'], str):
-            check['timestamp'] = datetime.fromisoformat(check['timestamp'])
+    # Upsert the location
+    await db.current_location.delete_many({})
+    await db.current_location.insert_one(location_dict)
     
-    return status_checks
+    return {"message": "Location updated successfully", "location": location_dict}
+
+# ========== Route Points Endpoints ==========
+@api_router.get("/route/points", response_model=List[RoutePoint])
+async def get_route_points():
+    """Get all route points"""
+    points = await db.route_points.find().sort("order", 1).to_list(1000)
+    if not points:
+        # Return seed data if empty
+        return seed_data.route_points
+    for point in points:
+        point.pop('_id', None)
+    return points
+
+# ========== Contact Form Endpoint ==========
+@api_router.post("/contact")
+async def submit_contact_form(submission: ContactSubmissionCreate):
+    """Submit contact/sponsorship inquiry"""
+    contact_dict = submission.dict()
+    contact_obj = ContactSubmission(**contact_dict)
+    
+    await db.contact_submissions.insert_one(contact_obj.dict())
+    
+    return {
+        "success": True,
+        "message": "Thank you for your inquiry! We'll get back to you soon.",
+        "submissionId": contact_obj.id
+    }
+
+# ========== Sponsors Endpoint ==========
+@api_router.get("/sponsors", response_model=List[Sponsor])
+async def get_sponsors():
+    """Get all active sponsors"""
+    sponsors = await db.sponsors.find({"active": True}).to_list(1000)
+    if not sponsors:
+        # Return seed data if empty
+        return seed_data.sponsors
+    for sponsor in sponsors:
+        sponsor.pop('_id', None)
+    return sponsors
 
 # Include the router in the main app
 app.include_router(api_router)
