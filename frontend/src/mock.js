@@ -6,7 +6,7 @@ export const expeditionInfo = {
   route: "Ivrea (Italy) to Mongolia",
   duration: "May - September 2026",
   team: "Bebeaver",
-  logo: "https://customer-assets.emergentagent.com/job_preso-website/artifacts/s65628sq_ChatGPT%20Image%203%20gen%202026%2C%2019_04_10.png",
+  logo: "https://customer-assets.emergentagent.com/job_preso-website/artifacts/k9b63y6a_ChatGPT%20Image%203%20gen%202026%2C%2019_04_10.png",
   description: "A 3-month independent overland expedition designed as a real-world field test. Continuous use, constant load, real conditions. No staged content."
 };
 
