@@ -6,6 +6,7 @@ import RouteMapLeaflet from './components/RouteMapLeaflet';
 import Features from './components/Features';
 import Approach from './components/Approach';
 import Documentation from './components/Documentation';
+import YouTubeVideos from './components/YouTubeVideos';
 import Sponsors from './components/Sponsors';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
@@ -14,7 +15,8 @@ import {
   expeditionFeatures,
   expeditionApproach,
   documentation,
-  contactInfo
+  contactInfo,
+  socialMedia
 } from './mock';
 
 function App() {
@@ -35,9 +37,14 @@ function App() {
       <Features features={expeditionFeatures} />
       <Approach approaches={expeditionApproach} />
       <Documentation items={documentation} />
+      <YouTubeVideos channelUrl={socialMedia.youtube} />
       <Sponsors />
       <Contact contactInfo={contactInfo} />
-      <Footer expeditionInfo={expeditionInfo} contactInfo={contactInfo} />
+      <Footer 
+        expeditionInfo={expeditionInfo} 
+        contactInfo={contactInfo} 
+        socialMedia={socialMedia}
+      />
       <Toaster richColors position="top-right" />
     </div>
   );
