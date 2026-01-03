@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapPin, Calendar, Users } from 'lucide-react';
+import { MapPin, Calendar } from 'lucide-react';
 import { Button } from './ui/button';
 
 const Hero = ({ expeditionInfo }) => {
