@@ -11,7 +11,7 @@ const Footer = ({ expeditionInfo, contactInfo }) => {
               <img 
                 src={expeditionInfo.logo} 
                 alt="Bebeaver" 
-                className="h-16 w-auto"
+                className="h-16 w-auto mix-blend-lighten"
               />
             </div>
             <p className="text-lg font-bold text-white mb-2">
