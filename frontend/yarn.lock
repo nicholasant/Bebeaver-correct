@@ -1,0 +1,4 @@
+yarn install
+git add yarn.lock package.json
+git commit -m "Lock deps"
+git push
